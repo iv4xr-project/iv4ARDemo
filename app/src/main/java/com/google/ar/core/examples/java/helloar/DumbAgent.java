@@ -43,10 +43,5 @@ public class DumbAgent {
         }
         previous = newAnchors ;
     }
-/*
-    public void runTestSequence(Frame frame, Session session) {
-        List<String> ids = getIds();
-        test.TestActivity.testSequence(state, ids, previous, frame, session);
-    }
-*/
+
 }
