@@ -7,7 +7,10 @@ import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
 import static org.hamcrest.Matchers.allOf;
+import static org.junit.Assert.assertTrue;
 
+import android.app.Activity;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;
@@ -18,11 +21,15 @@ import androidx.test.espresso.action.CoordinatesProvider;
 import androidx.test.espresso.action.GeneralClickAction;
 import androidx.test.espresso.action.Press;
 import androidx.test.espresso.action.Tap;
-import androidx.test.ext.junit.rules.ActivityScenarioRule;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.filters.LargeTest;
 import androidx.test.platform.app.InstrumentationRegistry;
+import androidx.test.rule.ActivityTestRule;
+import androidx.test.runner.lifecycle.ActivityLifecycleMonitorRegistry;
+import androidx.test.runner.lifecycle.Stage;
 import androidx.test.uiautomator.UiDevice;
+
+import com.google.ar.core.Anchor;
 
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
@@ -31,6 +38,9 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import java.util.Collection;
+import java.util.List;
+
 //
 
 @LargeTest
@@ -38,9 +48,9 @@ import org.junit.runner.RunWith;
 public class HelloArActivityTest {
 
     @Rule
-    //public ActivityTestRule<HelloArActivity> mActivityTestRule = new ActivityTestRule<>(HelloArActivity.class);
+    public ActivityTestRule<HelloArActivity> mActivityTestRule = new ActivityTestRule<>(HelloArActivity.class);
     //public IntentsTestRule<HelloArActivity> mActivityTestRule = new IntentsTestRule<>(HelloArActivity.class);
-    public ActivityScenarioRule<HelloArActivity> mActivityTestRule = new ActivityScenarioRule <>(HelloArActivity.class);
+    //public ActivityScenarioRule<HelloArActivity> mActivityTestRule = new ActivityScenarioRule <>(HelloArActivity.class);
 
     /*
     private HelloArActivity launchedActivity;
@@ -94,7 +104,69 @@ public class HelloArActivityTest {
         UiDevice.getInstance(InstrumentationRegistry.getInstrumentation()).click(400, 1000);
         Thread.sleep(3000);
         UiDevice.getInstance(InstrumentationRegistry.getInstrumentation()).click(300, 1000);
-        Thread.sleep(10000);
+        Thread.sleep(5000);
+
+        //Validate properties of mActivityTestRule
+
+        /*ActivityScenario scenario = mActivityTestRule.getScenario();
+        mActivityTestRule.getScenario().getResult().getResultData().get
+        scenario.getResult().getResultData();
+        Activity activityInstance = getActivityInstance();*/
+        /*assertThat(activity.getSomething()).isEqualTo("something");
+        assertEquals(datosRecibidos.extras!!.getString("nombre"), "Julio")
+        scenario.onActivity(activity -> {
+            assertThat(activity.getSomething()).isEqualTo("something");
+            assertThat(activity.activityResult.getResultData()).extras().containsKey("key");
+        });*/
+
+        List<WrappedAnchor> anchorsList = mActivityTestRule.getActivity().getAnchors();
+        for(WrappedAnchor wAnchor : anchorsList) {
+            Anchor anchor = wAnchor.getAnchor();
+            float qx = anchor.getPose().qx();
+            float qy = anchor.getPose().qy();
+            float qz = anchor.getPose().qz();
+            float qw = anchor.getPose().qw();
+
+            float tx = anchor.getPose().tx();
+            float ty = anchor.getPose().ty();
+            float tz = anchor.getPose().tz();
+
+            float[] xAxis = anchor.getPose().getXAxis();
+            float[] yAxis = anchor.getPose().getYAxis();
+            float[] zAxis = anchor.getPose().getZAxis();
+
+            String TAG = "MyActivity";
+            Log.d(TAG, "qx = " + qx);
+            Log.d(TAG, "qy = " + qy);
+            Log.d(TAG, "qz = " + qz);
+            Log.d(TAG, "qw = " + qw);
+            Log.d(TAG, "tx = " + tx);
+            Log.d(TAG, "ty = " + ty);
+            Log.d(TAG, "tz = " + tz);
+
+            Log.d(TAG, "xAxis:");
+            for(float i : xAxis){
+                Log.d(TAG, "" + i);
+            }
+            Log.d(TAG, "yAxis:");
+            for(float i : yAxis){
+                Log.d(TAG, "" + i);
+            }
+            Log.d(TAG, "zAxis:");
+            for(float i : zAxis){
+                Log.d(TAG, "" + i);
+            }
+
+            //TEST CASE 1: The base of the item is well placed in a surface
+            //It should only be able to be rotated to left/right (qy)
+            assertTrue(qx == 0.0);
+            assertTrue(qz == 0.0);
+
+        }
+
+        Thread.sleep(5000);
+
+
     }
 
     private static Matcher<View> childAtPosition(
@@ -134,5 +206,21 @@ public class HelloArActivityTest {
                     }
                 },
                 Press.FINGER);
+    }
+
+    public Activity getActivityInstance() {
+        final Activity[] activity = new Activity[1];
+        InstrumentationRegistry.getInstrumentation().runOnMainSync(new Runnable( ) {
+            public void run() {
+                Activity currentActivity = null;
+                Collection resumedActivities = ActivityLifecycleMonitorRegistry.getInstance().getActivitiesInStage(Stage.RESUMED);
+                if (resumedActivities.iterator().hasNext()){
+                    currentActivity = (Activity) resumedActivities.iterator().next();
+                    activity[0] = currentActivity;
+                }
+            }
+        });
+
+        return activity[0];
     }
 }
