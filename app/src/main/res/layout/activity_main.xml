@@ -19,6 +19,11 @@
     android:layout_height="match_parent"
     tools:context="com.google.ar.core.examples.java.helloar.HelloArActivity">
 
+  <!--<io.github.sceneview.ar.ArSceneView
+      android:id="@+id/sceneView"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent" />-->
+
   <android.opengl.GLSurfaceView
       android:id="@+id/surfaceview"
       android:layout_width="fill_parent"
@@ -34,5 +39,39 @@
       android:layout_margin="25dp"
       android:src="@drawable/ic_settings"
       android:background="@android:color/transparent"/>
+
+  <!--
+    Add a new "Record" button with those attributes:
+        text is "Record",
+        onClick event handler is "onClickRecord",
+        text color is "red".
+  -->
+  <Button
+      android:id="@+id/record_button"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_alignLeft="@id/surfaceview"
+      android:layout_alignBottom="@id/surfaceview"
+      android:layout_marginBottom="100dp"
+      android:onClick="onClickRecord"
+      android:text="Record"
+      android:textColor="@android:color/holo_red_light" />
+
+  <!--
+    Add a new "Playback" button with those attributes:
+        text is "Playback",
+        onClick event handler is "onClickPlayback",
+        text color is "green".
+  -->
+  <Button
+      android:id="@+id/playback_button"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_alignEnd="@id/surfaceview"
+      android:layout_alignBottom="@id/surfaceview"
+      android:layout_marginBottom="100dp"
+      android:onClick="onClickPlayback"
+      android:text="Playback"
+      android:textColor="@android:color/holo_green_light" />
 
 </RelativeLayout>
