@@ -91,7 +91,7 @@ public class HelloArActivityTest {
         Thread.sleep(1000);
 
         // Tap on SELECT
-        //UiDevice.getInstance(InstrumentationRegistry.getInstrumentation()).click(900, 300);
+        UiDevice.getInstance(InstrumentationRegistry.getInstrumentation()).click(900, 300);
         Thread.sleep(40000);
 
         //Tap the screen to place an item
@@ -188,7 +188,7 @@ public class HelloArActivityTest {
         };
     }
 
-    public static ViewAction clickXY(final int x, final int y){
+    /*public static ViewAction clickXY(final int x, final int y){
         return new GeneralClickAction(
                 Tap.SINGLE,
                 new CoordinatesProvider() {
@@ -206,9 +206,9 @@ public class HelloArActivityTest {
                     }
                 },
                 Press.FINGER);
-    }
+    }*/
 
-    public Activity getActivityInstance() {
+    /*public Activity getActivityInstance() {
         final Activity[] activity = new Activity[1];
         InstrumentationRegistry.getInstrumentation().runOnMainSync(new Runnable( ) {
             public void run() {
@@ -222,5 +222,5 @@ public class HelloArActivityTest {
         });
 
         return activity[0];
-    }
+    }*/
 }
