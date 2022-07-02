@@ -17,11 +17,14 @@ import eu.iv4xr.framework.mainConcepts.WorldModel;
 public class MyAgentEnv extends Iv4xrEnvironment {
 
     public HelloArActivity mainActivity;
-    String agentId = "agent Smith";
 
     List<WrappedAnchor> seenAnchors = new LinkedList<>();
 
+    List<String> lastSeen = new LinkedList<>() ;
+
     int freshId = 0 ;
+
+    int timeStamp = 0 ;
 
 
     public MyAgentEnv(HelloArActivity activity) {
@@ -36,12 +39,15 @@ public class MyAgentEnv extends Iv4xrEnvironment {
         return -1 ;
     }
 
-    @Override
+
     public WorldModel observe(String agentId) {
+
         WorldModel wom = new WorldModel() ;
         wom.agentId = agentId ;
+        wom.timestamp = timeStamp ;
 
         List<WrappedAnchor> anchorsList = mainActivity.getAnchors();
+        lastSeen.clear();
         for(WrappedAnchor a : anchorsList) {
 
             int id_ = getId(a) ;
@@ -53,16 +59,19 @@ public class MyAgentEnv extends Iv4xrEnvironment {
             Anchor anchor = a.getAnchor() ;
 
             String id = "A" + id_ ;
+            lastSeen.add(id) ;
             WorldEntity e = new WorldEntity(id,"3DObj", true) ;
+            e.timestamp = wom.timestamp ;
             e.properties.put("qx", anchor.getPose().qx()) ;
             e.properties.put("qy", anchor.getPose().qy()) ;
 
             e.properties.put("tx", anchor.getPose().tx()) ;
         }
+        this.timeStamp++ ;
         return wom ;
     }
 
-    public WorldModel tapping(int x, int y, int sleep) throws InterruptedException {
+    public WorldModel tapScreen(String agentId, int x, int y, int sleep) throws InterruptedException {
         UiDevice.getInstance(InstrumentationRegistry.getInstrumentation()).click(x, y);
         Thread.sleep(sleep);
         return observe(agentId);
