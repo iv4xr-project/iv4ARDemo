@@ -37,6 +37,7 @@ public class MyAgentState extends Iv4xrAgentState<Void> {
     public void updateState(String agentId) {
         super.updateState(agentId);
         // remove anchors that are no longer there:
+        // wrong logic! we should remove anchors whose id is NOT in lastseen.
         for(String id : env().lastSeen) {
             this.worldmodel.elements.remove(id) ;
         }

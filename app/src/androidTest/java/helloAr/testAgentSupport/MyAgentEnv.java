@@ -66,6 +66,8 @@ public class MyAgentEnv extends Iv4xrEnvironment {
             e.properties.put("qy", anchor.getPose().qy()) ;
 
             e.properties.put("tx", anchor.getPose().tx()) ;
+            // complete this :)
+            wom.elements.put(e.id,e) ;
         }
         this.timeStamp++ ;
         return wom ;
@@ -76,4 +78,6 @@ public class MyAgentEnv extends Iv4xrEnvironment {
         Thread.sleep(sleep);
         return observe(agentId);
     }
+
+    // add more actions
 }

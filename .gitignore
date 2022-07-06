@@ -2,6 +2,8 @@
 *.iml
 .idea/
 
+caches/
+
 # Gradle configuration.
 .gradle/
 build/

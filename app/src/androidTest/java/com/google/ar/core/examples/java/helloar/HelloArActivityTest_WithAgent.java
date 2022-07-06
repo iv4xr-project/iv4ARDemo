@@ -35,6 +35,7 @@ import org.junit.runner.RunWith;
 import java.util.List;
 
 import eu.iv4xr.framework.mainConcepts.TestAgent;
+import eu.iv4xr.framework.mainConcepts.WorldEntity;
 import helloAr.testAgentSupport.GoalLib;
 import helloAr.testAgentSupport.MyAgentEnv;
 import helloAr.testAgentSupport.MyAgentState;
@@ -72,6 +73,11 @@ public class HelloArActivityTest_WithAgent {
         while(G.getStatus().inProgress() && k < 20) {
             System.out.println(">>> k="+k) ;
             agent.update() ;
+            for(WorldEntity a : state.worldmodel().elements.values()) {
+                if (a.type.equals("3DObj")) {
+                    assertTrue((int) a.properties.get("qx") > 0 ) ;
+                }
+            }
         }
 
         assertTrue(G.getStatus().success());
