@@ -24,5 +24,34 @@ public class GoalLib {
         return lift("Screen @(" + x + "," + y + ") tapped", tap) ;
     }
 
-    // need to be completed
+    //New: More goals added
+    public GoalStructure clickButtonG(TestAgent agent, String buttonName, int sleep) throws InterruptedException {
+        Action click = action("clicking button")
+                .do1((MyAgentState S) -> {
+                    WorldModel obs = null;
+                    try {
+                        obs = S.env().clickButton(agent.getId(), buttonName, sleep);
+                    } catch (InterruptedException e) {
+                        return null ;
+                    }
+                    return obs ;
+                })
+                ;
+        return lift("'" + buttonName + "' button clicked", click) ;
+    }
+
+    public GoalStructure selectVideoG(TestAgent agent, int videoPosition, int sleepBetween, int sleepAfter) throws InterruptedException {
+        Action selectVideo = action("clicking button")
+                .do1((MyAgentState S) -> {
+                    WorldModel obs = null;
+                    try {
+                        obs = S.env().selectVideo(agent.getId(), videoPosition, sleepBetween, sleepAfter);
+                    } catch (InterruptedException e) {
+                        return null ;
+                    }
+                    return obs ;
+                })
+                ;
+        return lift("Video " + videoPosition + " selected", selectVideo) ;
+    }
 }

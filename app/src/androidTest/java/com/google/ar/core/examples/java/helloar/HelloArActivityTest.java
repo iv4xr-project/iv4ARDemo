@@ -8,24 +8,16 @@ import static androidx.test.espresso.matcher.ViewMatchers.withText;
 import static org.hamcrest.Matchers.allOf;
 import static org.junit.Assert.assertTrue;
 
-import android.app.Activity;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;
 
-import androidx.test.espresso.ViewAction;
 import androidx.test.espresso.ViewInteraction;
-import androidx.test.espresso.action.CoordinatesProvider;
-import androidx.test.espresso.action.GeneralClickAction;
-import androidx.test.espresso.action.Press;
-import androidx.test.espresso.action.Tap;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.filters.LargeTest;
 import androidx.test.platform.app.InstrumentationRegistry;
 import androidx.test.rule.ActivityTestRule;
-import androidx.test.runner.lifecycle.ActivityLifecycleMonitorRegistry;
-import androidx.test.runner.lifecycle.Stage;
 import androidx.test.uiautomator.UiDevice;
 
 import com.google.ar.core.Anchor;
@@ -37,11 +29,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import java.util.Collection;
 import java.util.List;
-
-import static nl.uu.cs.aplib.AplibEDSL.*;
-import static eu.iv4xr.framework.Iv4xrEDSL.*;
 
 
 @LargeTest
@@ -81,17 +69,21 @@ public class HelloArActivityTest {
         appCompatButton.perform(click());
         Thread.sleep(2000);
 
-        // Click on the recorded video
+        // Click on the recorded video (in Downloads file)
         // Long tap (select) on a video in the gallery
-        //First video
-        /*UiDevice.getInstance(InstrumentationRegistry.getInstrumentation()).click(100, 1500);
-        Thread.sleep(1000);*/
-        //Second video
-        UiDevice.getInstance(InstrumentationRegistry.getInstrumentation()).click(800, 1500);
-        Thread.sleep(1000);
+        //First video OK
+//        UiDevice.getInstance(InstrumentationRegistry.getInstrumentation()).click(200, 1000);
+        //Second video OK
+//        UiDevice.getInstance(InstrumentationRegistry.getInstrumentation()).click(800, 1000);
+        //Third video OK
+//        UiDevice.getInstance(InstrumentationRegistry.getInstrumentation()).click(200, 1500);
+        //Forth video OK
+//        UiDevice.getInstance(InstrumentationRegistry.getInstrumentation()).click(800, 1500);
 
         // Tap on SELECT
-        UiDevice.getInstance(InstrumentationRegistry.getInstrumentation()).click(900, 300);
+        /*Thread.sleep(1000);
+        UiDevice.getInstance(InstrumentationRegistry.getInstrumentation()).click(900, 300);*/
+
         Thread.sleep(40000);
 
         //Tap the screen to place an item
@@ -169,7 +161,7 @@ public class HelloArActivityTest {
 
     }
 
-    private static Matcher<View> childAtPosition(
+    public static Matcher<View> childAtPosition(
             final Matcher<View> parentMatcher, final int position) {
 
         return new TypeSafeMatcher<View>() {
