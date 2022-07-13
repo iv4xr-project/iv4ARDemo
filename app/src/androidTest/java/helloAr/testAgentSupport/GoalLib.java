@@ -40,12 +40,12 @@ public class GoalLib {
         return lift("'" + buttonName + "' button clicked", click) ;
     }
 
-    public GoalStructure selectVideoG(TestAgent agent, int videoPosition, int sleepBetween, int sleepAfter) throws InterruptedException {
+    public GoalStructure selectVideoG(TestAgent agent, int videoPosition, int sleep) throws InterruptedException {
         Action selectVideo = action("clicking button")
                 .do1((MyAgentState S) -> {
                     WorldModel obs = null;
                     try {
-                        obs = S.env().selectVideo(agent.getId(), videoPosition, sleepBetween, sleepAfter);
+                        obs = S.env().selectVideo(agent.getId(), videoPosition, sleep);
                     } catch (InterruptedException e) {
                         return null ;
                     }

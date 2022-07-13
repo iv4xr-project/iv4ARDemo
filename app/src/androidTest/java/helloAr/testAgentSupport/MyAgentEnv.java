@@ -120,7 +120,7 @@ public class MyAgentEnv extends Iv4xrEnvironment {
         return observe(agentId);
     }
 
-    public WorldModel selectVideo(String agentId, int videoPosition, int sleepBetween, int sleepAfter) throws InterruptedException {
+    public WorldModel selectVideo(String agentId, int videoPosition, int sleep) throws InterruptedException {
         switch (videoPosition) {        //coordinates in Downloads folder
             case 1:
                 UiDevice.getInstance(InstrumentationRegistry.getInstrumentation()).click(200, 1000);
@@ -132,7 +132,7 @@ public class MyAgentEnv extends Iv4xrEnvironment {
                 UiDevice.getInstance(InstrumentationRegistry.getInstrumentation()).click(800, 1500);
         }
 
-        Thread.sleep(sleepAfter);
+        Thread.sleep(sleep);
         return observe(agentId);
     }
 }

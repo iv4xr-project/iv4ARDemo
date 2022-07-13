@@ -72,7 +72,7 @@ public class HelloArActivityTest {
         // Click on the recorded video (in Downloads file)
         // Long tap (select) on a video in the gallery
         //First video OK
-//        UiDevice.getInstance(InstrumentationRegistry.getInstrumentation()).click(200, 1000);
+        UiDevice.getInstance(InstrumentationRegistry.getInstrumentation()).click(200, 1000);
         //Second video OK
 //        UiDevice.getInstance(InstrumentationRegistry.getInstrumentation()).click(800, 1000);
         //Third video OK

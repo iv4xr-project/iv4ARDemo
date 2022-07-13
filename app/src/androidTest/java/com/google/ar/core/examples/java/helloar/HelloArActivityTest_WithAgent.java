@@ -30,7 +30,7 @@ public class HelloArActivityTest_WithAgent {
 
 
     //@Test
-    public void helloArActivityTest()  {
+    public void helloArActivityTest() throws InterruptedException {
 
         TestAgent agent = new TestAgent("agentSmith","tester") ;
         MyAgentState state = new MyAgentState() ;
@@ -39,6 +39,8 @@ public class HelloArActivityTest_WithAgent {
              .attachEnvironment(new MyAgentEnv(mActivityTestRule.getActivity())) ;
         GoalLib goalLib = new GoalLib() ;
         GoalStructure G = SEQ(
+                goalLib.clickButtonG(agent, "Playback", 2000),
+                goalLib.selectVideoG(agent, 1, 1000),
                 goalLib.tapScreenG(agent,300,1500,3000),
                 goalLib.tapScreenG(agent,600,1500,3000),
                 goalLib.tapScreenG(agent,400,1000,3000),
