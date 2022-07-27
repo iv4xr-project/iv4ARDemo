@@ -73,8 +73,7 @@ public class MyAgentEnv extends Iv4xrEnvironment {
             lastSeen.add(id) ;
             WorldEntity e = new WorldEntity(id,"3DObj", true) ;
             e.timestamp = wom.timestamp ;
-            //TODO: complete this
-            // DONE
+            //New: Completed attributes
             e.properties.put("pose", anchor.getPose().toString()) ;
 
             e.properties.put("qx", anchor.getPose().qx()) ;

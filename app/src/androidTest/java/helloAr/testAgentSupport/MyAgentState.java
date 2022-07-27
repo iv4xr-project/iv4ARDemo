@@ -1,6 +1,7 @@
 package helloAr.testAgentSupport;
 
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
 
 import eu.iv4xr.framework.extensions.pathfinding.Navigatable;
 import eu.iv4xr.framework.mainConcepts.Iv4xrAgentState;
@@ -40,26 +41,35 @@ public class MyAgentState extends Iv4xrAgentState<Void> {
         super.updateState(agentId);
         // remove anchors that are no longer there:
         // wrong logic!
-
-        //New: Removed anchors whose id is NOT in lastseen
         /*for(String id : env().lastSeen) {
             this.worldmodel.elements.remove(id) ;
         }*/
-        Map elements = this.worldmodel.elements;
-        boolean isInLastSeen = false;
 
-        for (int i = 0; i < elements.size(); i++) {
+        //New: Removed anchors whose id is NOT in lastseen
+
+        //New: Split in two parts:
+        // 1: Store the elements to remove;
+        // 2: Remove them
+        boolean isInLastSeen = false;
+        List<String> elementsToRemove = new ArrayList<String>();
+
+        for(String idx : this.worldmodel.elements.keySet()) {
             for (String id : env().lastSeen) {
-                if(elements.get(i) == id) {
+                if(idx.equals(id)) {
                     isInLastSeen = true;
                     break;
                 }
             }
             if(isInLastSeen == false) {
-                this.worldmodel.elements.remove(i);
+                elementsToRemove.add(idx);
             }
             isInLastSeen = false;
         }
+
+        for(String element : elementsToRemove) {
+            this.worldmodel.elements.remove(element);
+        }
+
     }
 
 }
