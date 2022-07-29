@@ -48,15 +48,28 @@ public class HelloArActivityTest_WithAgent {
         ) ;
         agent.setGoal(G) ;
 
+
+
         int k=0 ;
         while(G.getStatus().inProgress() && k < 20) {
             System.out.println(">>> k="+k) ;
             agent.update() ;
+            int numberOfAnchorsDisplayed = 0;
+
+            //Specific assertions:
+            //  TEST CASE 1: The base of the item is well placed in a surface
+            //  It should only be able to be rotated to left/right (qy)
             for(WorldEntity a : state.worldmodel().elements.values()) {
                 if (a.type.equals("3DObj")) {
-                    assertTrue((int) a.properties.get("qx") > 0 ) ;
+                    assertTrue((int) a.properties.get("qx") == 0.0) ;
+                    assertTrue((int) a.properties.get("qz") == 0.0) ;
                 }
+
+                numberOfAnchorsDisplayed ++;
             }
+
+            //There are a maximum of 4 anchors displayed
+            assertTrue(numberOfAnchorsDisplayed <= 4);
         }
 
         assertTrue(G.getStatus().success());
