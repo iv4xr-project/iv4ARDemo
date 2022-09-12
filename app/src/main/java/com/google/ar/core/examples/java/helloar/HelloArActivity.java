@@ -486,7 +486,9 @@ public class HelloArActivity extends AppCompatActivity implements SampleRender.R
                       Texture.WrapMode.CLAMP_TO_EDGE,
                       Texture.ColorFormat.SRGB);
 
+      System.out.println("CP 1");
       virtualObjectMesh = Mesh.createFromAsset(render, "models/chair7.obj");
+      System.out.println("virtualObjectMesh: " + virtualObjectMesh.toString());
       virtualObjectShader =
               Shader.createFromAssets(
                       render,
@@ -768,6 +770,15 @@ public class HelloArActivity extends AppCompatActivity implements SampleRender.R
           WrappedAnchor anchor = new WrappedAnchor(hit.createAnchor(), trackable) ;
           anchor.id = "A" + wrappedAnchors.size() ;
           wrappedAnchors.add(anchor);
+
+          /*float tx = anchor.getAnchor().getPose().tx();
+          float ty = anchor.getAnchor().getPose().ty();
+          float tz = anchor.getAnchor().getPose().tz();
+          Log.d("COBA", "tx: " + tx) ;
+          Log.d("COBA", "ty: " + ty) ;
+          Log.d("COBA", "tz: " + tz) ;*/
+
+
           // For devices that support the Depth API, shows a dialog to suggest enabling
           // depth-based occlusion. This dialog needs to be spawned on the UI thread.
           this.runOnUiThread(this::showOcclusionDialogIfNeeded);

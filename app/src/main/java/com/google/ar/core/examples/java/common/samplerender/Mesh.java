@@ -17,15 +17,17 @@ package com.google.ar.core.examples.java.common.samplerender;
 
 import android.opengl.GLES30;
 import android.util.Log;
-import de.javagl.obj.Obj;
-import de.javagl.obj.ObjData;
-import de.javagl.obj.ObjReader;
-import de.javagl.obj.ObjUtils;
+
 import java.io.Closeable;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.FloatBuffer;
 import java.nio.IntBuffer;
+
+import de.javagl.obj.Obj;
+import de.javagl.obj.ObjData;
+import de.javagl.obj.ObjReader;
+import de.javagl.obj.ObjUtils;
 
 /**
  * A collection of vertices, faces, and other attributes that define how to render a 3D object.
@@ -136,6 +138,15 @@ public class Mesh implements Closeable {
       FloatBuffer localCoordinates = ObjData.getVertices(obj);
       FloatBuffer textureCoordinates = ObjData.getTexCoords(obj, /*dimensions=*/ 2);
       FloatBuffer normals = ObjData.getNormals(obj);
+
+      System.out.println("CP 2");
+      String TAG = "MyActivity";
+      Log.d(TAG, "NEW CHAIR:");
+      Log.d(TAG, " - localCoordinates: " + localCoordinates.compact().toString());
+      Log.d(TAG, " - textureCoordinates: " + textureCoordinates.compact().toString());
+      Log.d(TAG, " - normals: " + normals.compact().toString());
+
+      System.out.println("Hi!");
 
       VertexBuffer[] vertexBuffers = {
         new VertexBuffer(render, 3, localCoordinates),

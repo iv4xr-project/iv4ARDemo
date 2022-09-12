@@ -1,10 +1,21 @@
 package helloAr.testAgentSupport;
 
+import static androidx.test.espresso.Espresso.onView;
+import static androidx.test.espresso.action.ViewActions.click;
+import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
+import static androidx.test.espresso.matcher.ViewMatchers.withId;
+import static androidx.test.espresso.matcher.ViewMatchers.withText;
+
+import static com.google.ar.core.examples.java.helloar.HelloArActivityTest.childAtPosition;
+import static org.hamcrest.Matchers.allOf;
+
+import androidx.test.espresso.ViewInteraction;
 import androidx.test.platform.app.InstrumentationRegistry;
 import androidx.test.uiautomator.UiDevice;
 
 import com.google.ar.core.Anchor;
 import com.google.ar.core.examples.java.helloar.HelloArActivity;
+import com.google.ar.core.examples.java.helloar.R;
 import com.google.ar.core.examples.java.helloar.WrappedAnchor;
 
 import java.util.LinkedList;
@@ -62,11 +73,24 @@ public class MyAgentEnv extends Iv4xrEnvironment {
             lastSeen.add(id) ;
             WorldEntity e = new WorldEntity(id,"3DObj", true) ;
             e.timestamp = wom.timestamp ;
+            //New: Completed attributes
+            e.properties.put("pose", anchor.getPose().toString()) ;
+
             e.properties.put("qx", anchor.getPose().qx()) ;
             e.properties.put("qy", anchor.getPose().qy()) ;
+            e.properties.put("qz", anchor.getPose().qz()) ;
+            e.properties.put("qw", anchor.getPose().qw()) ;
+            e.properties.put("rotationQuaternion", anchor.getPose().getRotationQuaternion()) ;
 
             e.properties.put("tx", anchor.getPose().tx()) ;
-            // complete this :)
+            e.properties.put("ty", anchor.getPose().ty()) ;
+            e.properties.put("tz", anchor.getPose().tz()) ;
+            e.properties.put("translation", anchor.getPose().getTranslation()) ;
+
+            e.properties.put("xAxis", anchor.getPose().getXAxis()) ;
+            e.properties.put("yAxis", anchor.getPose().getYAxis()) ;
+            e.properties.put("zAxis", anchor.getPose().getZAxis()) ;
+
             wom.elements.put(e.id,e) ;
         }
         this.timeStamp++ ;
@@ -79,5 +103,35 @@ public class MyAgentEnv extends Iv4xrEnvironment {
         return observe(agentId);
     }
 
-    // add more actions
+    //New: More actions added
+    public WorldModel clickButton(String agentId, String buttonName, int sleep) throws InterruptedException {
+        ViewInteraction appCompatButton = onView(
+                allOf(withId(R.id.playback_button), withText(buttonName),
+                        childAtPosition(
+                                childAtPosition(
+                                        withId(android.R.id.content),
+                                        0),
+                                3),
+                        isDisplayed()));
+        appCompatButton.perform(click());
+
+        Thread.sleep(sleep);
+        return observe(agentId);
+    }
+
+    public WorldModel selectVideo(String agentId, int videoPosition, int sleep) throws InterruptedException {
+        switch (videoPosition) {        //coordinates in Downloads folder
+            case 1:
+                UiDevice.getInstance(InstrumentationRegistry.getInstrumentation()).click(200, 1000);
+            case 2:
+                UiDevice.getInstance(InstrumentationRegistry.getInstrumentation()).click(800, 1000);
+            case 3:
+                UiDevice.getInstance(InstrumentationRegistry.getInstrumentation()).click(200, 1500);
+            case 4:
+                UiDevice.getInstance(InstrumentationRegistry.getInstrumentation()).click(800, 1500);
+        }
+
+        Thread.sleep(sleep);
+        return observe(agentId);
+    }
 }
